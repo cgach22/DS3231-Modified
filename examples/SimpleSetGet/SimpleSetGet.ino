@@ -30,7 +30,7 @@ bool PM;
 byte ADay, AHour, AMinute, ASecond, ABits;
 bool ADy, A12h, Apm;
 
-bool shortString = true;
+bool shortInt = true;
 
 void GetDateStuff(byte& Year, byte& Month, byte& Day, byte& DoW,
                   byte& Hour, byte& Minute, byte& Second) {
@@ -108,11 +108,14 @@ void loop() {
     Clock.setSecond(Second);
   }
 
-  else if (shortString) {
-    String hour =  String(Clock.getHour(h12, PM), DEC);
-    String minute =  String(Clock.getMinute(), DEC);
-    String time = hour + minute;
+  else if (shortInt) {
+    int hour =  Clock.getHour(h12, PM);
+    int minute = Clock.getMinute();
+
+    int time = hour * 100 + minute;
+    
     Serial.println(time);
+    
   }
 
   else {
@@ -138,7 +141,7 @@ void loop() {
     // Finally the hour, minute, and second
     Serial.print(Clock.getHour(h12, PM), DEC);
     Serial.print(' ');
-    Serial.print(Clock.getMinute(), DEC);
+    Serial.print(Clock.getMinute());
     Serial.print(' ');
     Serial.print(Clock.getSecond(), DEC);
     
